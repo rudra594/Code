@@ -1,0 +1,31 @@
+# Sentiment-Analysis
+import nltk
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+nltk.download('vader_lexicon')
+
+def analyze_sentiment(text):
+    """Analyzes the sentiment of a given text using VADER.
+
+    Args:
+        text (str): The text to analyze.
+
+    Returns:
+        dict: A dictionary containing the sentiment scores.
+    """
+
+    sia = SentimentIntensityAnalyzer()
+    sentiment = sia.polarity_scores(text)
+    return sentiment
+
+# Example usage
+text = "This restaurant is amazing! The food was delicious and the service was excellent."
+sentiment = analyze_sentiment(text)
+print(f"Sentiment scores: {sentiment}")
+
+if sentiment['compound'] >= 0.05:
+    print("Overall sentiment: Positive")
+elif sentiment['compound'] <= -0.05:
+    print("Overall sentiment: Negative")
+else:
+    print("Overall sentiment: Neutral"
