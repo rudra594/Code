@@ -1,0 +1,33 @@
+# Credit-Card-Fraud-Detection
+# Data Collection & Preprocessing
+# Import libraries, load data from CSV/API
+import pandas as pd
+data = pd.read_csv("creditcard.csv")
+# Handle missing values, feature engineering
+# One-hot encoding, scaling features
+# Model Training
+# Split data into train/test sets
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(data.drop("Class", axis=1), data["Class"], test_size=0.2)
+# Choose an appropriate model (e.g., Logistic Regression, Random Forest)
+from sklearn.linear_model import LogisticRegression
+model = LogisticRegression()
+model.fit(X_train, y_train)
+# Evaluate performance using metrics (accuracy, precision, recall, F1-score)
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+y_pred = model.predict(X_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+# Real-Time Deployment
+# Create a Flask API to handle incoming transactions
+from flask import Flask, request
+app = Flask(__name__)
+@app.route("/predict", methods=["POST"])
+def predict():
+  transaction_data = request.get_json()
+  # Preprocess data
+  prediction = model.predict(transaction_data)
+  return {"fraud_probability": prediction}
+# Continuous Monitoring
+# Monitor model performance over time, track false positives/negatives
+# Retrain models periodically
+# Use dashboards for visualization and alert
